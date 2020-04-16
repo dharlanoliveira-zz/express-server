@@ -12,6 +12,7 @@ var options = {
 
 router.options('/', cors(options))
 router.options('/language', cors(options))
+router.options('/clear', cors(options))
 
 /* GET users listing. */
 router.get('/', cors(options), function (req, res, _) {
@@ -33,7 +34,7 @@ router.post('/language', cors(options), function (req, res, _) {
         } else if(result.length > 0){
             res.status(200).send({language: result[0].language})
         } else {
-            res.status(412).send(`No language identified in reponse ${result}`)
+            res.status(200).send({language: "n/a"})
         }
     });
 });
@@ -52,7 +53,14 @@ router.post('/', cors(options), function (req, res, _) {
     }
 
     posts = posts.concat([req.body]);
+    res.    sendStatus(200);
+});
+
+router.post('/clear', cors(options), function (req, res, _) {
+    posts = [];
     res.sendStatus(200);
 });
+
+
 
 module.exports = router;
